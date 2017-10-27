@@ -15,9 +15,6 @@ const int REFRESH_AMOUNT = 45;
 const int REFRESH_PER_ENERGY = 6;  // Minutes
 const int REFRESH_PER_CANTINA_ENERGY = 12; // Minutes
 
-tm times[6];
-int maxEnergies[2];
-
 fstream settings;
 system_clock::time_point currentTime;
 
@@ -38,6 +35,9 @@ enum ENERGY_TYPE
 	CANTINA_E,
 	ETYPE_SIZE
 };
+
+tm times[TIMES::TIMES_SIZE];
+int maxEnergies[ENERGY_TYPE::ETYPE_SIZE];
 
 const string TIME_STRINGS[] =
 {
@@ -297,7 +297,8 @@ calcCurrentEnergyForGuildReset(int maxEnergy, int timePerSingleEnergy,
 // Returns in hours, minutes
 tm 
 timeToGetFullEnergy(int currentEnergy, int maxEnergy, int timePerSingleEnergy,
-	tm energyResetTimes[6], const tm *customCurrentTime = nullptr)
+	tm energyResetTimes[TIMES::TIMES_SIZE],
+	const tm *customCurrentTime = nullptr)
 {
 	// TODO: Account for energy reset times, use custom current time.
 	tm time;
@@ -326,7 +327,8 @@ addTime(tm originalTime, tm additionalTime)
 
 tm
 whatTimeIsFullEnergy(int currentEnergy, int maxEnergy, int timePerSingleEnergy,
-	tm energyResetTimes[6], const tm *customCurrentTime = nullptr)
+	tm energyResetTimes[TIMES::TIMES_SIZE],
+	const tm *customCurrentTime = nullptr)
 {
 	// TODO: Account for energy reset times and customCurrentTime
 	tm timeFromNowForFullEnergy = timeToGetFullEnergy(currentEnergy, maxEnergy,
@@ -352,11 +354,11 @@ main(int argc, char ** argv)
 
 	//cout << timeToString(timeToGetFullEnergy(143, 144, 6, times), true)
 	//	<< endl;
-	//cout << timeToString(whatTimeIsFullEnergy(0, 144, 6, times), false) 
-	//	<< endl;
+	/*cout << timeToString(whatTimeIsFullEnergy(0, 144, 6, times), false) 
+		<< endl;
 
 	firstTimeSetup();
-	writeSettings();
+	writeSettings();*/
 
 	if (argc == 1)
 	{
